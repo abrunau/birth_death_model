@@ -1,1 +1,11 @@
 
+
+class individuals: # blueprint de mes individus
+    def __init__(self, sex, h, w, fest):
+        self.sex = sex
+        self.h = h
+        self.w = w
+        self.fest = fest
+         
+p1 = individuals("M",12,2,0)
+
