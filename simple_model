@@ -10,7 +10,23 @@ class individuals: # blueprint de mes individus
         self.fest = fest
          
 p1 = individuals("M",12,2,0)
+
+def create_ind(sex,h,w,fest):
+    ind = individuals(sex,h,w,fest)
+    ind.sex = sex
+    ind.h = h
+    ind.w = w
+    ind.fest = fest
+    return(ind)
+
 """
+
+
+
+
+
+
+
 
 
 # this is the simple birth-death model
