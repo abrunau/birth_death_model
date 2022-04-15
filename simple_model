@@ -1,4 +1,6 @@
 
+"""
+individual based part (for later)
 
 class individuals: # blueprint de mes individus
     def __init__(self, sex, h, w, fest):
@@ -8,4 +10,30 @@ class individuals: # blueprint de mes individus
         self.fest = fest
          
 p1 = individuals("M",12,2,0)
+"""
 
+
+# this is the simple birth-death model
+import numpy 
+import matplotlib.pyplot as plt
+
+N = 100
+b = 0.1
+d = 0.1
+lam = b + d
+t = 0
+pop = []
+temps = []
+
+while t < 1000:
+    dt = numpy.random.exponential(1/lam)
+    event = numpy.random.uniform(low=0,high=1)
+    if event < b/lam:
+        N += 1
+    else:
+        N -= 1
+    t += dt
+    pop.append(N)
+    temps.append(t)
+
+plt.plot(temps,pop)
