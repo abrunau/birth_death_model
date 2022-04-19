@@ -1,6 +1,13 @@
-
+# -*- coding: utf-8 -*-
 """
-individual based part (for later)
+Created on Fri Apr 15 14:58:11 2022
+
+@author: abrunaud
+"""
+
+import random as r
+import numpy as np
+import matplotlib.pyplot as plt
 
 class individuals: # blueprint de mes individus
     def __init__(self, sex, h, w, fest):
@@ -8,10 +15,8 @@ class individuals: # blueprint de mes individus
         self.h = h
         self.w = w
         self.fest = fest
-         
-p1 = individuals("M",12,2,0)
-
-def create_ind(sex,h,w,fest):
+        
+def create_ind(sex,h,w,fest): # individual creation function
     ind = individuals(sex,h,w,fest)
     ind.sex = sex
     ind.h = h
@@ -19,37 +24,50 @@ def create_ind(sex,h,w,fest):
     ind.fest = fest
     return(ind)
 
-"""
+pop_l = []  # va contenir la population
+Eff0 = 200  # effectif de pop initial
 
+for i in range(Eff0):   # creation de la pop selon individuals
+    pop_l.append(create_ind(r.sample(["M","F"],1),
+                            np.random.normal(11.5,1), 
+                            np.random.normal(1,0.5), 
+                            0))
 
+b = 0.1         # birth rate (arbitrary)
+d = 0.1         # death rate (arbitrary)
+lam = b + d     # parametre lambda (pour loi expo)
+t = 0           # temps de simulation
+pop_evo = []    # va contenir effectif de la pop en fct du temps
+temps = []      # abscisse plot
 
-
-
-
-
-
-
-# this is the simple birth-death model
-import numpy 
-import matplotlib.pyplot as plt
-
-N = 100
-b = 0.1
-d = 0.1
-lam = b + d
-t = 0
-pop = []
-temps = []
-
-while t < 1000:
-    dt = numpy.random.exponential(1/lam)
-    event = numpy.random.uniform(low=0,high=1)
-    if event < b/lam:
-        N += 1
-    else:
-        N -= 1
+while t < 1000:     # le temps de simu est arbitraire pour l'instant
+    dt = np.random.exponential(1/lam) # time interval picked in exp law with parameter lambda
+    event = np.random.uniform(low=0,high=1)
+    if event < b/lam:       # birth event
+        pop_l.insert(r.sample(range(len(pop_l)),1)[0],create_ind(r.sample(["M","F"],1),np.random.normal(11.5,1), np.random.normal(1,0.5), 0))
+    else:                   # death event
+        pop_l.pop(r.sample(range(len(pop_l)),1)[0])
     t += dt
-    pop.append(N)
     temps.append(t)
+    pop_evo.append(len(pop_l))
 
-plt.plot(temps,pop)
+plt.plot(temps,pop_evo)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
