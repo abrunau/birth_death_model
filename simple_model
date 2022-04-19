@@ -21,6 +21,81 @@ def create_ind(sex,h,w,fest):
 
 """
 
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Apr 19 08:46:23 2022
+
+@author: arthu
+"""
+
+import numpy as np
+import random as rd
+import matplotlib.pyplot as plt
+# from tabulate import tabulate
+
+class individuals: # blueprint de mes individus
+    def __init__(self, sex, h, w, fest):
+        self.sex = sex
+        self.h = h
+        self.w = w
+        self.fest = fest
+
+def create_ind(sex,h,w,fest): # fonction pour créer individus
+    ind = individuals(sex,h,w,fest)
+    ind.sex = sex
+    ind.h = h
+    ind.w = w
+    ind.fest = fest
+    return(ind)
+
+pop_l = []
+Nsim = 200
+
+for i in range(Nsim): # création de ma population à partir de individuals
+    pop_l.append(create_ind(rd.sample(["M","F"],1),
+                            np.random.normal(11.5,1),
+                            np.random.normal(1,0.5),
+                            0))                          
+
+
+
+# print(tabulate(pop_l))
+
+
+
+
+
+
+
+
+
+
+
+# partie birth-death
+
+b = 0.1
+d = 0.1
+lam = b + d
+t = 0
+pop_evo = []
+temps = []
+
+while t < 1000:
+    dt = np.random.exponential(1/lam)
+    event = np.random.uniform(low=0,high=1)
+    if event < b/lam: # naissance
+        pop_l.insert(rd.sample(range(len(pop_l)),1)[0],create_ind(rd.sample(["M","F"],1), np.random.normal(11.5,1), np.random.normal(1,0.5), 0))
+    else: # mort
+        pop_l.pop(rd.sample(range(len(pop_l)),1)[0]) # supprime un individu aléatoire
+    t += dt
+    temps.append(t)
+    pop_evo.append(length)
+
+plt.plot(temps,pop_evo)
+
+
+
+
 
 
 
